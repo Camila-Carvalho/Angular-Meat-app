@@ -1,30 +1,22 @@
-import { Restaurant } from "./restaurant/restaurant.model";
+import { Injectable } from "@angular/core" //2 ---> Importa o injectable pra poder usar a API
+import {Http} from '@angular/http' //4 ---> Importa o http
 
+import{ Observable } from 'rxjs/Observable' //7 ---> Importar o Observable
+import 'rxjs/add/operator/map' //8 ---> Importar para poder realizar o mapeamento dos dados que estão na API
+
+import { Restaurant } from "./restaurant/restaurant.model"
+
+
+import { MEAT_API } from '../app.api'; //1 ---> Importa a API
+
+
+@Injectable() //3 ---> Define o injectable antes da classe de serviço
 export class RestaurantsService{
+  
+      constructor(private http: Http){} //5 ---> Coloca um parametro http do tipo Http no contrutor
 
-    rests: Restaurant[] = [
-        {
-          id: "bread-bakery",
-          name: "Bread & Bakery",
-          category: "Bakery",
-          deliveryEstimate: "25m",
-          rating: 4.9,
-          imagePath: "assets/img/restaurants/breadbakery.png"
-        },
-        {
-          id: "burger-house",
-          name: "Burger House",
-          category: "Hamburgers",
-          deliveryEstimate: "100m",
-          rating: 3.5,
-          imagePath: "assets/img/restaurants/burgerhouse.png"
-        }
-      ];
-
-      constructor(){}
-
-      restaurants(): Restaurant[] {
-          return this.rests;
+      restaurants(): Observable<Restaurant[]> { //6 --->Necessário colocar Observable porque na API está observable e no app esta um array de restaurante
+          return this.http.get(`${MEAT_API}/restaurants`).map(response => response.json()) //9 ---> pega o que está na API/restaurants que está mapeado no json
       }
 
 }
