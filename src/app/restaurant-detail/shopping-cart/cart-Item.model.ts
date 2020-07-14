@@ -5,8 +5,8 @@ export class CartItem{
     public quantity :number
     public menuItem: MenuItem
 */
-    constructor(public menuItem: MenuItem, public quantity: number = 1){
-        
+    constructor(public menuItem: MenuItem, 
+                public quantity: number = 1){
     }
 
     value(): number{
