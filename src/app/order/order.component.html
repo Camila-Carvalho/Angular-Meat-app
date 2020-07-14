@@ -3,11 +3,7 @@
 
 <section class="content">
   <section class="invoice">
-    <!--PARA TESTE DE VALIDAÇÃO-->
-    {{form.valid}}
-    {{form.value | json}}
-    <!--/PARA TESTE DE VALIDAÇÃO-->
-
+    
     <!--Novalidate: é para que o Angular realize a validação do formulário e não o navegador-->
     <form #form="ngForm" novalidate>
       <div class="row">
@@ -39,7 +35,7 @@
 
         <div class="col-sm-3 col-xs-6">
           <mt-input-container>
-            <input class="form-control" name="optional" ngModel placeholder="Complemento">
+            <input class="form-control" name="optionalAddress" ngModel placeholder="Complemento">
           </mt-input-container>
         </div>
         <!-- /.col -->
