@@ -70,7 +70,7 @@
           <p class="lead">Formas de Pagamento:</p>
 
           <div class="form-group">
-            <mt-radio [options]="paymentOptions" name="paymentOption" ngModel></mt-radio>
+            <mt-radio [options]="paymentOptions" name="paymentOption" ngModel required></mt-radio>
           </div>
 
         </div>
@@ -91,9 +91,7 @@
     <div class="row">
       <div class="col-xs-12">
         <!--disabled é utilizado para ficar habilitado somente quando o formulário for válido-->
-        <button class="btn btn-success pull-right" [disabled]="!form.valid"><i class="fa fa-credit-card"></i> Concluir
-          Pedido
-        </button>
+        <button class="btn btn-success pull-right" [disabled]="!form.valid || cartItems().length === 0"><i class="fa fa-credit-card"></i> Concluir Pedido</button>
       </div>
     </div>
 
