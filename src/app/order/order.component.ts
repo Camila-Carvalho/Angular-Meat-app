@@ -9,6 +9,8 @@ import { OrderService } from './order.service';
 })
 export class OrderComponent implements OnInit {
 
+  delivery: number = 8
+
   paymentOptions: RadioOption[] = [
     { label: 'Dinheiro', value: 'MON' },
     { label: 'Cartão de Débito', value: 'DEB' },
@@ -20,10 +22,14 @@ export class OrderComponent implements OnInit {
   ngOnInit() {
   }
 
-
   //chama todas as funções implementas no serviço
   cartItems(): CartItem[] {
     return this.orderService.cartItems()
+  }
+
+  //total dos produtos
+  itemsValue(item: CartItem){
+    return this.orderService.itemsValue(item)
   }
 
   increaseQty(item: CartItem) {
@@ -34,7 +40,7 @@ export class OrderComponent implements OnInit {
     this.orderService.decreaseQty(item)
   }
 
-  remove(item: CartItem){
+  remove(item: CartItem) {
     this.orderService.remove(item)
   }
 
