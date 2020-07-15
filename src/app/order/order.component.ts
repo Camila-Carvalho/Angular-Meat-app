@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validator, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validator, Validators, AbstractControl } from '@angular/forms';
 import { Router } from '@angular/router';
 
 
@@ -43,7 +43,20 @@ export class OrderComponent implements OnInit {
       number: this.formBuilder.control('', [Validators.required, Validators.pattern(this.numberPattern)]),
       optionalAddress: this.formBuilder.control(''),
       paymentOption: this.formBuilder.control('', [Validators.required])
-    })
+    }, {validator: OrderComponent.equalsTo})
+  }
+
+  //função para verificar se os e-mails estão corretos
+  static equalsTo(group: AbstractControl): {[key: string]: boolean}{
+    const email = group.get('email') 
+    const emailConfirmation = group.get('emailConfirmation')
+    if(!email || !emailConfirmation){ //se nenhum existir no grupo, retorna undefined
+      return undefined
+    }
+    if(email.value !== emailConfirmation.value){ //se forem diferentes, retorna um erro
+      return{emailsNotMatch:true}
+    }
+    return undefined
   }
 
   //chama todas as funções implementas no serviço
