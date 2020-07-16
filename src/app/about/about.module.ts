@@ -14,8 +14,7 @@ const ROUTES: Routes = [ //7 ---> Criar uma constante do tipo array para informa
         AboutComponent
     ],
     imports:[ //9 ---> Criar os imports, para importar as rotas
-        RouterModule, //10 ---> Informar o módulo de rotas
-        RouterModule.forChild(ROUTES)//11 ---> Informar o módulo de rotas do módulo filho, o ABOUT passando a constante de rotas do módulo filho
+       RouterModule.forChild(ROUTES)//10 ---> Informar o módulo de rotas do módulo filho, o ABOUT passando a constante de rotas do módulo filho
     ]
 })
 
