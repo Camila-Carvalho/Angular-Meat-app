@@ -3,6 +3,8 @@ import { trigger, state, style, transition, animate } from '@angular/animations'
 
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/timer';
+import 'rxjs/add/operator/do';
+import 'rxjs/add/operator/switchMap';
 
 import { NotificationService } from './../notification.service';
 
@@ -36,11 +38,21 @@ export class SnackbarComponent implements OnInit {
   constructor(private notificationService: NotificationService) { }
 
   ngOnInit() {
-    this.notificationService.notifier.subscribe(message =>{
-      this.message = message
-      this.snackVisibility = 'visible'
-      Observable.timer(3000).subscribe(timer => this.snackVisibility = 'hidden') //tempo para ele voltar a hidden
-    })
-  }
+    this.notificationService.notifier
+      .do(message=>{
+        this.message = message
+        this.snackVisibility = 'visible'
+      }).switchMap(message => Observable.timer(3000))
+      .subscribe(timer => this.snackVisibility = 'hidden')
 
+    /* FAZER DESTA FORMA ACABA ENVIANDO VÁRIAS NOTIFICAÇÕES COM O MESMO TEMPO E BUGANDO ELAS, POR ISSO PRECISA
+    SER FEITO CONFORMA ACIMA, PARA NÃO SOBRECARREGAR DE MENSAGENS COM TEMPOS IGUAIS
+        this.notificationService.notifier.subscribe(message => {
+          this.message = message
+          this.snackVisibility = 'visible'
+          Observable.timer(3000).subscribe(timer => this.snackVisibility = 'hidden') //tempo para ele voltar a hidden
+        })
+      }
+    */
+  }
 }
