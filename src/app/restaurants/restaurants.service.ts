@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core" //2 ---> Importa o injectable pra poder usar a API
-import {Http} from '@angular/http' //4 ---> Importa o http
+import {HttpClient, HttpParams} from '@angular/common/http' //4 ---> Importa o http
 
 import{ Observable } from 'rxjs/Observable' //7 ---> Importar o Observable
 import 'rxjs/add/operator/map' //8 ---> Importar para poder realizar o mapeamento dos dados que estão na API
@@ -15,33 +15,29 @@ import { ErrorHandler } from './../app.error-handler';
 @Injectable() //3 ---> Define o injectable antes da classe de serviço
 export class RestaurantsService{
   
-      constructor(private http: Http){} //5 ---> Coloca um parametro http do tipo Http no contrutor
+      constructor(private http: HttpClient){} //5 ---> Coloca um parametro http do tipo Http no contrutor
       
       //método para apresentar a lista de restaurantes
       restaurants(search?: string): Observable<Restaurant[]> { //6 --->Necessário colocar Observable porque na API está observable e no app esta um array de restaurante
-        return this.http.get(`${MEAT_API}/restaurants`, {params:{q: search}})
-          .map(response => response.json()) //9 ---> pega o que está na API/restaurants que está mapeado no json
-          .catch(ErrorHandler.handleError)
+        let params: HttpParams = undefined
+        if(search){
+          params = new HttpParams().set('q', search)
+        }
+        return this.http.get<Restaurant[]>(`${MEAT_API}/restaurants`, {params: params})
       }
 
       //método pra apresentar somente um restaurante com base no id dele
       restaurantById(id: string): Observable<Restaurant> {
-        return this.http.get(`${MEAT_API}/restaurants/${id}`)
-        .map(response => response.json())
-        .catch(ErrorHandler.handleError)
+        return this.http.get<Restaurant>(`${MEAT_API}/restaurants/${id}`)
       }
 
       //método para apresentar os comentários de um restaurante
       reviewsOfRestaurant(id: string): Observable<any>{
         return this.http.get(`${MEAT_API}/restaurants/${id}/reviews`)
-        .map(response => response.json())
-        .catch(ErrorHandler.handleError)
       }
 
       menuOfRestaurant(id: string): Observable<MenuItem[]>{
-        return this.http.get(`${MEAT_API}/restaurants/${id}/menu`)
-        .map(response => response.json())
-        .catch(ErrorHandler.handleError)
+        return this.http.get<MenuItem[]>(`${MEAT_API}/restaurants/${id}/menu`)
       }
 
 }

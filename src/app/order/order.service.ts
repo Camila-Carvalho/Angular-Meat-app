@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
-
 import { Observable } from 'rxjs/Observable';
-import { Http, Headers, RequestOptions } from '@angular/http';
+import { HttpClient } from '@angular/common/http';
+
 import 'rxjs/add/operator/map'
 import { MEAT_API } from './../app.api';
 
@@ -14,7 +14,7 @@ import { ShoppingCartService } from './../restaurant-detail/shopping-cart/shoppi
 @Injectable() //1---> pois será necessário injetar o serviço de shopping cart
 export class OrderService {
 
-    constructor(private cartService: ShoppingCartService, private http: Http) { //2---> Adicionar o serviço de shoppingCartService
+    constructor(private cartService: ShoppingCartService, private http: HttpClient) { //2---> Adicionar o serviço de shoppingCartService
     }
 
     cartItems(): CartItem[] {//3---> Função para mostrar os itens
@@ -43,15 +43,8 @@ export class OrderService {
 
     //método para enviar para API.JSON
     checkOrder(order: Order): Observable<string>{
-        const headers = new Headers() //necessário informar o tipo do conteúdo que está passando, por isso é necessário o header
-        headers.append('Content-Type', 'aplication/json') //no header é necessário passar o nome do header e o valor dele
-        return this.http.post(`${MEAT_API}/orders`, JSON.stringify(order), new RequestOptions({headers: headers})).map(response=>response.json()).map(order => order.id)
-        /*
-        return this.http.post ---> retorna a compra
-        (`${MEAT_API}/orders`, ---> coloca na pasta orders
-        JSON.stringify(order)) ---> objeto que vai ser mandado, está em stringify porque em http a representação é textual 
-        new RequestOptions({headers: headers}) ---> aqui é pra passar os headers
-        */
+        return this.http.post<Order>(`${MEAT_API}/orders`, order)
+            .map(order => order.id)
     }
     //Depois de pronto necessário expor no componente
 }
