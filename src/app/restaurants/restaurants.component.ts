@@ -5,6 +5,9 @@ import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import 'rxjs/add/operator/switchMap'
 import 'rxjs/add/operator/debounceTime'
 import 'rxjs/add/operator/distinctUntilChanged'
+import 'rxjs/add/operator/catch'
+import 'rxjs/add/observable/from'
+import { Observable } from 'rxjs/Observable';
 
 import { Restaurant } from './restaurant/restaurant.model';
 import { RestaurantsService } from './restaurants.service';
@@ -50,7 +53,9 @@ export class RestaurantsComponent implements OnInit {
     this.searchControl.valueChanges
       .debounceTime(500) //tempo para de intervalo para procura de cada caractere
       .distinctUntilChanged() //utilizado para caso pesquise o que já está na barra de pesquisa, ele não vá até o servidor buscar novamente
-      .switchMap(searchTeam => this.restaurantsService.restaurants(searchTeam))
+      .switchMap(searchTeam => 
+                  this.restaurantsService.restaurants(searchTeam)
+                  .catch(error=>Observable.from([])))
       .subscribe(restaurants => this.restaurants = restaurants)
 
 
