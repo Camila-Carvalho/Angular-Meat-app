@@ -65,8 +65,8 @@ export class OrderComponent implements OnInit {
   }
 
   //total dos produtos
-  itemsValue(item: CartItem){
-    return this.orderService.itemsValue(item)
+  itemsValue(): number{
+    return this.orderService.itemsValue()
   }
 
   increaseQty(item: CartItem) {

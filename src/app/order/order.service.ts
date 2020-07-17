@@ -33,7 +33,7 @@ export class OrderService {
         this.cartService.removeItem(item)
     }
 
-    itemsValue(item: CartItem) {
+    itemsValue() {
         return this.cartService.total()
     }
 
