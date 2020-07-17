@@ -3,6 +3,8 @@ import { trigger, state, style, transition, animate } from '@angular/animations'
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 
 import 'rxjs/add/operator/switchMap'
+import 'rxjs/add/operator/debounceTime'
+import 'rxjs/add/operator/distinctUntilChanged'
 
 import { Restaurant } from './restaurant/restaurant.model';
 import { RestaurantsService } from './restaurants.service';
@@ -45,8 +47,11 @@ export class RestaurantsComponent implements OnInit {
     })
     //para ouvir o que está sendo ditado no console:
     //this.searchControl.valueChanges.subscribe(searchTeam => console.log(searchTeam))
-    this.searchControl.valueChanges.switchMap(searchTeam => this.restaurantsService.restaurants(searchTeam))
-                                   .subscribe(restaurants => this.restaurants = restaurants)
+    this.searchControl.valueChanges
+      .debounceTime(500) //tempo para de intervalo para procura de cada caractere
+      .distinctUntilChanged() //utilizado para caso pesquise o que já está na barra de pesquisa, ele não vá até o servidor buscar novamente
+      .switchMap(searchTeam => this.restaurantsService.restaurants(searchTeam))
+      .subscribe(restaurants => this.restaurants = restaurants)
 
 
     this.restaurantsService.restaurants().subscribe(restaurants => this.restaurants = restaurants) //Necessário incluir o subscribe para a requisição na API ser feita

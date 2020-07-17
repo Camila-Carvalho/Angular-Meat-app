@@ -16,6 +16,7 @@ import { ErrorHandler } from './../app.error-handler';
 export class RestaurantsService{
   
       constructor(private http: Http){} //5 ---> Coloca um parametro http do tipo Http no contrutor
+      
       //método para apresentar a lista de restaurantes
       restaurants(search?: string): Observable<Restaurant[]> { //6 --->Necessário colocar Observable porque na API está observable e no app esta um array de restaurante
         return this.http.get(`${MEAT_API}/restaurants`, {params:{q: search}})
