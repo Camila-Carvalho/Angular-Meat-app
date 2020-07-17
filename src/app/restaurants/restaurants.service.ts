@@ -17,8 +17,8 @@ export class RestaurantsService{
   
       constructor(private http: Http){} //5 ---> Coloca um parametro http do tipo Http no contrutor
       //método para apresentar a lista de restaurantes
-      restaurants(): Observable<Restaurant[]> { //6 --->Necessário colocar Observable porque na API está observable e no app esta um array de restaurante
-        return this.http.get(`${MEAT_API}/restaurants`)
+      restaurants(search?: string): Observable<Restaurant[]> { //6 --->Necessário colocar Observable porque na API está observable e no app esta um array de restaurante
+        return this.http.get(`${MEAT_API}/restaurants`, {params:{q: search}})
           .map(response => response.json()) //9 ---> pega o que está na API/restaurants que está mapeado no json
           .catch(ErrorHandler.handleError)
       }
