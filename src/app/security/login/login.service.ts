@@ -17,7 +17,7 @@ export class LoginService{
 
     //método para outras partes da aplicação saber se possui um usuário logado
     isLoggedIn(): boolean{
-        return this.user != undefined
+        return this.user !== undefined
     }
 
     //método de login que irá se comunicar com o backend
