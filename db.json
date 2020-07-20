@@ -391,6 +391,22 @@
     },
     {
       "id": 7
+    },
+    {
+      "name": "Juliana",
+      "email": "juliana@gmail.com",
+      "emailConfirmation": "juliana@gmail.com",
+      "address": "Pontes",
+      "number": "123",
+      "optionalAddress": "",
+      "paymentOption": "MON",
+      "orderItems": [
+        {
+          "quantity": 1,
+          "menuId": "cup-cake"
+        }
+      ],
+      "id": 8
     }
   ]
 }
