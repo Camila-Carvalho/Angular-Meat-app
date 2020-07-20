@@ -1,5 +1,7 @@
 import { Routes } from '@angular/router'
 
+import { LoginComponent } from './security/login/login.component';
+
 import { HomeComponent } from './home/home.component';
 import { RestaurantsComponent } from './restaurants/restaurants.component';
 import { RestaurantDetailComponent } from './restaurant-detail/restaurant-detail.component';
@@ -11,6 +13,7 @@ import { NotFoundComponent } from './not-found/not-found.component';
 
 export const ROUTES: Routes = [
     {path: '', component: HomeComponent}, //quando não especificar caminho, pega o componente principal
+    {path: 'login', component: LoginComponent},
     {path: 'restaurants', component: RestaurantsComponent},
     {path: 'restaurants/:id', component: RestaurantDetailComponent,//":id" é para ele direcionar para um id variável
         children: [ //children é usado para ter "menus" dentro do "menu", por exemplo, é necessário acessar o restaurante para ver o menu e as avaliações
