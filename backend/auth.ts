@@ -7,7 +7,7 @@ export const handleAuthentication = (req: Request, resp: Response)=>{
     //código que vai processar o post do login
     const user: User = req.body
     if(isValid(user)){
-        const dbUser: User = users[user.email]
+        const dbUser = users[user.email]
         const token = jwt.sign({sub: dbUser.email, iss:'meat-api'}, 'meat-api-password')
         resp.json({name: dbUser.name, email: dbUser.email, accessToken: token})
     }
@@ -21,5 +21,5 @@ function isValid(user: User): boolean{
         return false
     }
     const dbUser = users[user.email]
-    return dbUser !== undefined && dbUser.metches(user)
+    return dbUser !== undefined && dbUser.matches(user)
 }

@@ -20,5 +20,5 @@ function isValid(user) {
         return false;
     }
     var dbUser = users_1.users[user.email];
-    return dbUser !== undefined && dbUser.metches(user);
+    return dbUser !== undefined && dbUser.matches(user);
 }
