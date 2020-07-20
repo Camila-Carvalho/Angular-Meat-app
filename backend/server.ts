@@ -5,6 +5,7 @@ import * as fs from 'fs'
 import * as https from 'https'
 
 import {handleAuthentication} from './auth'
+import {handleAuthorization} from './authz'
 
 const server:Express = jsonServer.create()
 const router = jsonServer.router('db.json')
@@ -19,7 +20,8 @@ server.use(jsonServer.bodyParser)
 
 //rota de login
 server.post('/login', handleAuthentication)
-
+//middlewares de autorização para acessar a tela de compras
+server.use('/orders', handleAuthorization)
 
 // Use default router
 server.use(router)
