@@ -26,16 +26,16 @@ export class LoginComponent implements OnInit {
       email: this.fb.control('', [Validators.required, Validators.email]),
       password: this.fb.control('', [Validators.required]),
     })
-    this.navigateTo = this.activatedRoute.snapshot.params['to'] || '/' //se alguém chamar e não tiver uma rota, ele navega para raiz (/)
+    this.navigateTo = this.activatedRoute.snapshot.params['to'] || atob('/') //se alguém chamar e não tiver uma rota, ele navega para raiz (/)
   }
 
   login() {
     this.loginService.login(this.loginForm.value.email,
-      this.loginForm.value.password)
-      .subscribe(user => this.notificationService.notify(`Bem vindo(a), ${user.name}!`),
-        response => this.notificationService.notify(response.error.message),
+      this.loginForm.value.password) //Subscribe passa 3 respostas
+      .subscribe(user => this.notificationService.notify(`Bem vindo(a), ${user.name}!`), //a resposta se der certo
+        response => this.notificationService.notify(response.error.message), //a resposta em caso de erro
         ()=>{
-          this.router.navigate([this.navigateTo])
+          this.router.navigate([btoa(this.navigateTo)])//resposta para quando o observable terminar
         })
   }
 
