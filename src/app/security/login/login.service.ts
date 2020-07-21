@@ -1,9 +1,10 @@
 import { Injectable } from "@angular/core";
 import { HttpClient } from '@angular/common/http';
-import { Router } from '@angular/router';
+import { Router, NavigationEnd } from '@angular/router';
 
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/do'
+import 'rxjs/add/operator/filter'
 
 import { User } from './user.model'
 import { MEAT_API } from './../../app.api';
@@ -12,8 +13,11 @@ import { MEAT_API } from './../../app.api';
 export class LoginService{
 
     user: User
+    lastUrl: string
 
     constructor(private http: HttpClient, private router: Router){
+        this.router.events.filter(e => e instanceof NavigationEnd)
+                        .subscribe((e: NavigationEnd) => this.lastUrl = e.url)
     }
 
     //método para outras partes da aplicação saber se possui um usuário logado
@@ -27,7 +31,12 @@ export class LoginService{
                         .do(user=>this.user = user)
     }
 
-    handleLogin(path?: string){
+    logout(){
+        this.user = undefined
+    }
+
+    handleLogin(path: string = this.lastUrl){
+        //console.log(`path: ${path}`)
         this.router.navigate(['/login', btoa(path)])
     }
 }

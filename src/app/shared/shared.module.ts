@@ -13,8 +13,9 @@ import { NotificationService } from './messages/notification.service';
 import { OrderService } from './../order/order.service';
 import { RestaurantsService } from './../restaurants/restaurants.service';
 import { ShoppingCartService } from './../restaurant-detail/shopping-cart/shopping-cart.service';
-import {LoggedInGuard} from '../security/loggedin.guard'
-import { from } from 'rxjs/observable/from';
+import {LoggedInGuard} from '../security/loggedin.guard';
+import { LeaveOrderGuard } from '../order/leave-order.guard';
+
 
 @NgModule({
     declarations: [
@@ -50,7 +51,8 @@ export class SharedModule{ //se importar só SharedModule, vai somente o módulo
                 OrderService,
                 RestaurantsService,
                 ShoppingCartService,
-                LoggedInGuard
+                LoggedInGuard,
+                LeaveOrderGuard
             ]
         }
     }
