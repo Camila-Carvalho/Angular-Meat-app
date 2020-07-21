@@ -10,7 +10,6 @@ import { MenuItem } from './../restaurant-detail/menu-item/menu-item.model';
 
 
 import { MEAT_API } from '../app.api'; //1 ---> Importa a API
-import { ErrorHandler } from './../app.error-handler';
 
 @Injectable() //3 ---> Define o injectable antes da classe de serviço
 export class RestaurantsService{
