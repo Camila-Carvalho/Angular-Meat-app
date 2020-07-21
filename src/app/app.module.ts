@@ -24,6 +24,7 @@ import { NotFoundComponent } from './not-found/not-found.component';
 import { LoginComponent } from './security/login/login.component';
 
 
+
 @NgModule({
   declarations: [
     AppComponent,

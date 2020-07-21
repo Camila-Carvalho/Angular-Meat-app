@@ -9,7 +9,7 @@ import { MenuComponent } from './restaurant-detail/menu/menu.component';
 import { ReviewsComponent } from './restaurant-detail/reviews/reviews.component';
 import { OrderSummaryComponent } from './order-summary/order-summary.component';
 import { NotFoundComponent } from './not-found/not-found.component';
-
+import{LoggedInGuard} from './security/loggedin.guard'
 
 export const ROUTES: Routes = [
     {path: '', component: HomeComponent}, //quando não especificar caminho, pega o componente principal
@@ -22,7 +22,7 @@ export const ROUTES: Routes = [
             {path: 'reviews', component: ReviewsComponent} //aqui é para navegar em avaliações
         ]
     },
-    {path: 'order', loadChildren: './order/order.module#OrderModule'},
+    {path: 'order', loadChildren: './order/order.module#OrderModule', canLoad: [LoggedInGuard]},
     {path: 'order-summary', component: OrderSummaryComponent},
     {path: 'about', loadChildren: './about/about.module#AboutModule'},
     {path: '**', component: NotFoundComponent} //última rota para o sistema acessar quando não encontrar uma URL
